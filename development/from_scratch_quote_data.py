@@ -1,16 +1,6 @@
 # real-time websocket
 
-import os
-from dotenv import load_dotenv
-
-# load environment variables from .env file
-
-load_dotenv()
-
-# get API key from environment variables
-
-api_key = os.getenv('API_KEY')
-api_secret = os.getenv('API_SECRET')
+from keys import api_key, api_secret
 
 import asyncio
 import websockets
@@ -74,3 +64,9 @@ asyncio.get_event_loop().run_until_complete(subscribe_to_alpaca(api_key, api_sec
 # ask (/offer): lowest price at which a seller is willing to sell a security - represents the supply side of the market
 # bid size: number of shares a buyer is willing to purchase at the bid price - vice versa for sell size
 # 
+
+# Types of market data:
+
+# 1. Quotes:
+
+# quotes include the bid and ask prices, which 

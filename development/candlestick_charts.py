@@ -1,64 +1,53 @@
+import sys
+import os
 import pandas as pd
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import matplotlib.pyplot as plt
-import mplfinance as mpf
-from datacredentials import database, username, password, host, port
+import plotly.graph_objects as go
+from dotenv import load_dotenv
 
+load_dotenv()
 
-# Setup SQLAlchemy
-DATABASE_URI = f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}'
-engine = create_engine(DATABASE_URI)
-Session = sessionmaker(bind=engine)
-session = Session()
+module_path = os.getenv('PYTHONPATH')
+if module_path and module_path not in sys.path:
+    sys.path.append(module_path)
 
-def fetch_data(symbol, start_date, end_date):
-    query = """
-    SELECT symbol, date, open, high, low, close, volume
-    FROM stock_data
-    WHERE symbol = :symbol AND date BETWEEN :start_date AND :end_date
-    ORDER BY date
+# figure out how to set this permanently - using Environmental variables in settings
+
+from data_pipeline_prototype.database import get_db_connection
+
+def fetch_data(symbol, timeframe, start_date, end_date):
+    table_name = f"{symbol}_{timeframe}_stock_data".lower()
+    
+    query = f"""
+    SELECT * FROM {table_name}
+    WHERE timestamp BETWEEN '{start_date}' AND '{end_date}'
+    ORDER BY timestamp
     """
-    df = pd.read_sql(query, engine, params={"symbol": symbol, "start_date": start_date, "end_date": end_date})
+    
+    with get_db_connection() as conn:
+        df = pd.read_sql(query, conn)
+    
     return df
 
-def resample_data(df, timeframe):
-    df['date'] = pd.to_datetime(df['date'])
-    df.set_index('date', inplace=True)
-    if timeframe == 'hour':
-        df_resampled = df.resample('H').agg({
-            'open': 'first',
-            'high': 'max',
-            'low': 'min',
-            'close': 'last',
-            'volume': 'sum'
-        })
-    elif timeframe == 'day':
-        df_resampled = df.resample('D').agg({
-            'open': 'first',
-            'high': 'max',
-            'low': 'min',
-            'close': 'last',
-            'volume': 'sum'
-        })
-    return df_resampled
+def generate_candlestick_chart(df, symbol):
+    fig = go.Figure(data=[go.Candlestick(x=df['timestamp'],
+                                         open=df['open'],
+                                         high=df['high'],
+                                         low=df['low'],
+                                         close=df['close'])])
+    fig.update_layout(
+        title=f'Candlestick Chart for {symbol}',
+        xaxis_title='Date',
+        yaxis_title='Price',
+        xaxis_rangeslider_visible=False
+    )
+    fig.show()
 
-def plot_candlestick(df, symbol, timeframe):
-    mpf.plot(df, type='candle', volume=True, title=f'{symbol} - {timeframe.capitalize()} Candlestick Chart')
 
-# Fetch and plot data
-symbol = 'AAPL'
-start_date = '2023-01-01'
-end_date = '2023-12-31'
+if __name__ == '__main__':
+    symbol = 'MSFT'
+    timeframe = '1Min'
+    start_date = "2023-01-03 13:00:00"
+    end_date = "2023-01-05 14:00:00"
 
-df = fetch_data(symbol, start_date, end_date)
-df_hourly = resample_data(df, 'hour')
-df_daily = resample_data(df, 'day')
-
-# Plot hourly candlestick chart
-plot_candlestick(df_hourly, symbol, 'hour')
-plt.show()
-
-# Plot daily candlestick chart
-plot_candlestick(df_daily, symbol, 'day')
-plt.show()
+    df = fetch_data(symbol, timeframe, start_date, end_date)
+    generate_candlestick_chart(df, symbol)

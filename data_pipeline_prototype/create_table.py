@@ -7,7 +7,7 @@ from database import engine
 
 def create_stock_data_table(symbol, timeframe):
     metadata = MetaData() # creates a `MetaData` instance to hold the schema of the table
-    table_name = f"{symbol}_{timeframe}_stock_data"
+    table_name = f"{symbol}_{timeframe}_stock_data".lower()
     
     inspector = inspect(engine) # uses the `inspector` to check if a table with the generated name already exists in the database
 

@@ -23,7 +23,7 @@ def get_historical_data(symbol_or_symbols, start, end, timeframe):
     return bars.df.reset_index()
 
 def store_data(data, symbol, timeframe):
-    table_name = f"{symbol}_{timeframe}_stock_data"
+    table_name = f"{symbol}_{timeframe}_stock_data".lower()
     metadata = MetaData() # used to collect information about the tables in the database
     metadata.reflect(bind=engine) # reflect is a method of `MetaData` that reads the database schema (tables, columns, constraints, etc.) from the database connected by 
     # engine

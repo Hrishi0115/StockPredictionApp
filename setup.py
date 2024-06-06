@@ -38,5 +38,8 @@ setup(
     name='stockpredictionapp',
     version='0.1',
     packages=find_packages(),
-    install_requires=parse_requirements('requirements.txt')
+    install_requires=parse_requirements('requirements.txt') 
 )
+
+# use `pipreqs . --force ` to update requirements.txt when new dependencies are added
+# dependencies refer to external packages/software that your project needs to function properly

@@ -1,0 +1,7 @@
+alpaca==1.0.0
+pandas==2.2.2
+plotly==5.22.0
+python-dotenv==1.0.1
+setuptools==65.5.0
+SQLAlchemy==2.0.30
+websockets==12.0

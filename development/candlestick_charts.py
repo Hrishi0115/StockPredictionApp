@@ -2,17 +2,12 @@ import sys
 import os
 import pandas as pd
 import plotly.graph_objects as go
-from dotenv import load_dotenv
-
-load_dotenv()
-
-module_path = os.getenv('PYTHONPATH')
-if module_path and module_path not in sys.path:
-    sys.path.append(module_path)
-
-# figure out how to set this permanently - using Environmental variables in settings
 
 from data_pipeline_prototype.database import get_db_connection
+
+# this should not be in data pipeline - SHOULD CREATE A SEPERATE PACKAGE for all database interaction
+                                            # also stuff like datacredentials.py
+# then should call this package in the data pipeline package
 
 def fetch_data(symbol, timeframe, start_date, end_date):
     table_name = f"{symbol}_{timeframe}_stock_data".lower()

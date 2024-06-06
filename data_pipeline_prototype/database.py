@@ -1,6 +1,6 @@
 # this file will manage the database connections and sessions
 
-# backend/database.py
+# data_pipeline_prototype/database.py
 
 from datacredentials import database, username, password, host, port
 from sqlalchemy import create_engine

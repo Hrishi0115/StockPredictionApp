@@ -1,6 +1,6 @@
 # this file will handle the logic for creating a table if it doesn't exist
 
-# backend/create_table.py
+# data_pipeline_prototype/create_table.py
 
 from sqlalchemy import inspect, Table, Column, Integer, String, Float, DateTime, MetaData
 from database import engine

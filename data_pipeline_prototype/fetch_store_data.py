@@ -1,6 +1,6 @@
 # this script will handle fetching and storing it in the database using sessions provided by `database.py`
 
-# backend/fetch_store_data.py
+# data_pipeline_prototype/fetch_store_data.py
 
 from alpaca.data import StockHistoricalDataClient
 from alpaca.data.requests import StockBarsRequest

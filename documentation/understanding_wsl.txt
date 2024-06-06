@@ -1,0 +1,16 @@
+File System Structure in WSL
+
+WSL Home directory:
+
+- The home directory in WSL is similar to the home directory on a native Linux system
+- It is located at `home/your_username` = `home/hrishi0115` = `~`
+- E.g. `~/airflow/dags` = `/home/hrishi0115/airflow/dags`
+
+/mnt Directory:
+
+- The directory where WSL mounts your Windows file system
+- For example, your C: drive in Windows is accessible at `/mnt/C/` in WSL
+- this allows you to access your Windows files from within the WSL environment
+
+
+To access the files in your WSL area via file explorer by typing `\\wsl` in the file explorer search bar (large search bar)

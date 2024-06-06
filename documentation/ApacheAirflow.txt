@@ -1,0 +1,8 @@
+- A platform to programmatically author, schedule, and monitor workflows
+- Workflows are defined as Directed Acyclic Graphs (DAGs), and the tasks within a DAG are defined using Python code.
+
+- Directed Acyclic Graphs/DAGs: collection of tasks you want to read, organised in a way that reflects their relationships and dependencies
+- Tasks: building blocks of a DAG - each task is an individual step in a workflow
+- Operators: determine what actually gets done by a task - e.g. BashOperator, PythonOperator, SensorOperator
+- Schedulers execute the tasks on an array of workers while following the specified dependencies
+

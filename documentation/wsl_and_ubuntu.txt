@@ -1,0 +1,23 @@
+Ubuntu:
+- popular open-source operating system based on Linux.
+- widely used for servers, desktops, cloud computing, and development environments due to its stability, security, and the extensive community support
+
+WSL (Windows Subsystem for Linux):
+- a compatability layer developed by Microsoft that enables Windows users to run Linux binary executables natively on Windows 10 and Windows Server 2019
+
+
+Why use WSL and Ubuntu for Airflow?
+
+- Apache Airflow is an open-source automation tool used for orchestrating complex computational workflows and data processing pipelines.
+- primarly designed to run on UNIX-based systems (Linux and macOS), which provides a more consistent and reliable environment for its dependencies
+and operations
+
+Reason for Using WSL and Ubuntu:
+- Compatability: airflow and many of its dependencies are better supported and more stable on Linux environments
+- Ease of setup: using WSL allows you to set up a Linux environment without needing to leave Windows, avoiding the complexities of managing a seperate Linux machine 
+or a full virtual machine.
+- Development Flexibility: You get the benefit of using powerful Linux tools and utilities directly within your Windows environment, improving your development workflow.
+- Resource Efficiency: WSL is lightweight and consumes fewer resources compared to running a full virtual machine, making it efficient for development tasks.
+
+`source /mnt/c/Users/hrish/GitProjects/StockPredictionApp/venv/Scripts/activate` - activate venv in Ubuntu
+
